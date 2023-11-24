@@ -3,6 +3,7 @@
 @model IEnumerable<UserResultDto>
 @{
     var dto = Model.LastOrDefault();
+    var defaultImage = "./Images/Logos/profile.png";
 }
 
     <nav class="navbar navbar-light bg-light justify-content-between">
@@ -33,20 +34,10 @@
                 <tr>
                     <td>@tr</td>
                     <td>
-                        @if (item.Asset is null)
-                        {
-                            <img src="./Images/Logos/profile.png"
+                            <img src=@item.Asset is null ? @defaultImage : @item.Asset.FilePath
                                  alt="Image"
                                  style="width: 40px; height: 40px"
                                  class="rounded-circle" />
-                        }
-                        else
-                        {
-                            <img src="@item.Asset.FilePath"
-                                    alt="Image"
-                                    style="width: 45px; height: 45px"
-                                    class="rounded-circle" />
-                        }
                     </td>
                     <td class="pt-3">@item.FirstName</td>
                     <td class="pt-3">@item.LastName</td>
@@ -55,16 +46,13 @@
                     <td class="pt-3">@item.UserRole</td>
                     <td>
                         <div class="btn-group">
-
                             <a class="btn btn-outline-primary" href="@Url.Action("Detail", "Users", item.Id)">Detail</a>
                             <a class="btn btn-outline-warning" href="@Url.Action("Update", "Users", item.Id)">Update</a>
-                            <a class="btn btn-outline-danger" href="@Url.Action("Delete", "Users", item.Id)">Delete</a>
-                            <form asp-action="Delete" asp-controller="Users" method="post">
+                            <form class="btn btn-outline-danger" asp-action="Delete" asp-controller="Users" method="post">
                                 <button type="submit" asp-route-id=@item.Id onclick="return confirm('Delete selected item?');">
-                                    Link Text
+                                    Delete
                                 </button>
                             </form>
-
                         </div>
                     </td>
                     @{tr++;}

@@ -29,9 +29,7 @@ public class UsersController : Controller
         return Redirect("index");
     }
 
-
-
-    [HttpPost]
+    [HttpDelete]
     public async ValueTask<IActionResult> Delete(long id)
     {
         var i = id;
