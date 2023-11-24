@@ -4,6 +4,7 @@
 @{
     var dto = Model.LastOrDefault();
     var defaultImage = "./Images/Logos/profile.png";
+    int tr = 1;
 }
 
     <nav class="navbar navbar-light bg-light justify-content-between">
@@ -28,34 +29,31 @@
             </tr>
         </thead>
         <tbody>
-            @{int tr = 1;}
             @foreach(var item in Model)
             {
                 <tr>
-                    <td>@tr</td>
+                    <td>@(tr++)</td>
                     <td>
-                            <img src=@item.Asset is null ? @defaultImage : @item.Asset.FilePath
-                                 alt="Image"
-                                 style="width: 40px; height: 40px"
-                                 class="rounded-circle" />
+                        <img src="@Html.DisplayFor(i => item.Asset.FilePath ?? defaultImage)"
+                             alt="Image"
+                             style="width: 40px; height: 40px"
+                             class="rounded-circle" />
                     </td>
-                    <td class="pt-3">@item.FirstName</td>
-                    <td class="pt-3">@item.LastName</td>
-                    <td class="pt-3">@item.Phone</td>
-                    <td class="pt-3">@item.Email</td>
-                    <td class="pt-3">@item.UserRole</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.FirstName)</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.LastName)</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.Phone)</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.Email)</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.UserRole)</td>
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-outline-primary" href="@Url.Action("Detail", "Users", item.Id)">Detail</a>
                             <a class="btn btn-outline-warning" href="@Url.Action("Update", "Users", item.Id)">Update</a>
-                            <form class="btn btn-outline-danger" asp-action="Delete" asp-controller="Users" method="post">
-                                <button type="submit" asp-route-id=@item.Id onclick="return confirm('Delete selected item?');">
-                                    Delete
-                                </button>
+
+                            <form asp-controller="Users" asp-route-id="@item.Id" asp-action="Delete" method="post">
+                                <button type="submit" onclick="return confirm('Ma\'lumotni o\'chirishga ishonchingiz komilmi?');">Delete</button>
                             </form>
                         </div>
                     </td>
-                    @{tr++;}
                 </tr>
             }
         </tbody>

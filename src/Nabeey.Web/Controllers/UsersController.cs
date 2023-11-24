@@ -29,12 +29,12 @@ public class UsersController : Controller
         return Redirect("index");
     }
 
-    [HttpDelete]
+    [HttpPost]
     public async ValueTask<IActionResult> Delete(long id)
     {
         var i = id;
         await userService.RemoveAsync(id);
-        return Redirect("index");
+        return Redirect("/");
     }
 
     public IActionResult Create()
