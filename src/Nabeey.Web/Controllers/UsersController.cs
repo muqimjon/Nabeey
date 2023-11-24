@@ -26,7 +26,7 @@ public class UsersController : Controller
     public async ValueTask<IActionResult> Update(UserUpdateDto dto)
     {
         await userService.ModifyAsync(dto);
-        return Redirect("/index");
+        return Redirect("index");
     }
 
 
@@ -46,7 +46,7 @@ public class UsersController : Controller
     public async ValueTask<IActionResult> Create(UserCreationDto dto)
     {
         await userService.AddAsync(dto);
-        return Redirect("/index");
+        return Redirect("index");
     }
 
 }

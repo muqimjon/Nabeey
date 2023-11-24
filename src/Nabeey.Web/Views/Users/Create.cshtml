@@ -1,0 +1,69 @@
+﻿@using Nabeey.Service.DTOs.Users
+@model UserCreationDto
+
+<style>
+    .toggle-button {
+        position: absolute;
+        right: 25px;
+        top: 70%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>
+
+<form asp-controller="Users" asp-action="Create" method="post" class="d-sm-grid m-5">
+    <h1>Create User</h1>
+    <div class="border-bottom mb-5"></div>
+    <div class="row mb-4">
+        <div class="col">
+            <label asp-for="FirstName" class="form-label">First name</label>
+            <input type="text" asp-for="FirstName" class="form-control" required/>
+        </div>
+        <div class="col">
+            <label asp-for="LastName" class="form-label">Last name</label>
+            <input type="text" asp-for="LastName" class="form-control" required/>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input type="email" asp-for="Email" class="form-control" required/>
+        </div>
+        <div class="col">
+            <label asp-for="Phone" class="form-label">Phone</label>
+            <input type="tel" asp-for="Phone" class="form-control" required/>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col assword-toggle">
+            <label asp-for="Password" class="form-label">Password</label>
+            <input type="password" asp-for="Password" class="form-control" required/>
+            <span class="toggle-button fa-regular fa-eye-slash" style="color:#CED4DA" onclick="togglePassword()" />
+        </div>
+        <div class="col">
+            <label asp-for="Image" class="form-label">Image</label>
+            <input type="file" asp-for="Image" style="color:#CED4DA" class="form-control" accept="image/*" />
+        </div>
+    </div>
+    <div class="btn-group-vertical align-items-center m-4">
+        <button type="submit" class="btn btn-success mb-4 w-25">Submit</button>
+        <a asp-action="Index" class="btn btn-secondary btn-block w-25">Cancel</a>
+    </div>
+</form>
+
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("Password");
+        var toggleButton = document.querySelector(".toggle-button");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleButton.classList = "toggle-button fa-regular fa-eye-slash";
+        } else {
+            passwordInput.type = "password";
+            toggleButton.classList = "toggle-button fa-regular fa-eye";
+        }
+    }
+</script>

@@ -1,7 +1,6 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@1.1.2/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-xLGBU65wCDv2/qEdq3ZYw2Qdiia/wxxeGepRyZmpQdY=" crossorigin="anonymous">
@@ -13,9 +12,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
     <script src="https://kit.fontawesome.com/15cb85390e.js" crossorigin="anonymous"></script>
     <title>Bootstrap demo</title>
-    
     <style>
-
         #submenu {
             transition: all 0.1s ease;
         }
@@ -43,90 +40,46 @@
             height: 89.5vh;
         }
     </style>
-
 </head>
 <body style="background-color:#fff">
-
     <nav class="navbar navbar-dark" style="background-color: #01384D">
         <div class="container-fluid d-flex justify-content-between">
+            <div> <i class="fas fas-user"> <img src="~/Images/Logos/NabeeyLogo.png" style="color:white" width="40"  alt="Logo"/> </i> </div>
             <div>
-                 <i class="fas fas-user"> <img src="~/Images/Logos/NabeeyLogo.png" style="color:white" width="40"  alt="Logo" /></i>
-            </div>
-
-            <div>
-                <li class="nav-item dropdown">
+                <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                         <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
-                            <style>
-                                svg {
-                                    fill: #f8b451
-                                }
-                            </style>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512" style="fill: #f8b451">
                             <path d="M406.5 399.6C387.4 352.9 341.5 320 288 320H224c-53.5 0-99.4 32.9-118.5 79.6C69.9 362.2 48 311.7 48 256C48 141.1 141.1 48 256 48s208 93.1 208 208c0 55.7-21.9 106.2-57.5 143.6zm-40.1 32.7C334.4 452.4 296.6 464 256 464s-78.4-11.6-110.5-31.7c7.3-36.7 39.7-64.3 78.5-64.3h64c38.8 0 71.2 27.6 78.5 64.3zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-272a40 40 0 1 1 0-80 40 40 0 1 1 0 80zm-88-40a88 88 0 1 0 176 0 88 88 0 1 0 -176 0z" />
                         </svg> 
                     </a>
-
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end mt-2 bg-dark">
-                        <li><a class="dropdown-item"  href="@Url.Action("Profile", "User")">Profile</a></li>
-                        <li><button class="dropdown-item" type="button">Settings</button></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Logout", "Home")">Log out</a></li>
+                        <li> <a class="dropdown-item"  href="@Url.Action("Profile", "User")">Profile</a> </li>
+                        <li> <button class="dropdown-item" type="button">Settings</button> </li>
+                        <li> <a class="dropdown-item" href="@Url.Action("Logout", "Home")">Log out</a> </li>
                     </ul>
-                </li>
-            </div>
-        </div>
-
-        <div class="sidebar collapse in show pt-6" id="navbarToggleExternalContent">
-            <div class="position-absolute start-0 col-md-2 mx-auto p-3 shadow w-25" style="color:white; background-color:#01384D">
-                    <div class="menu accordion active" style="color:white;">
-                        <ul class="menu-list">
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Users")"><i class="fa-solid fa-user me-2"></i> Users</a>
-                            </li>
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Categories")"><i class="fa-solid fa-layer-group me-2"></i> Categories</a>
-                            </li>
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Books")"><i class="fa-solid fa-book me-2"></i> Books</a>
-                            </li>
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Articles")"><i class="fa-solid fa-newspaper me-2"></i> Articles </a>
-                            </li>
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Videos")"><i class="fa-solid fa-video me-2"></i> Videos</a>
-                            </li>
-
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Audios")"><i class="fa-solid fa-file-audio me-2"></i> Audios</a>
-                            </li>
-
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Certificates")"><i class="fa-solid fa-certificate me-2"></i> Certificates</a>
-                            </li>
-
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Quizzes")"><i class="fa-solid fa-brain me-2"></i> Quizzes</a>
-                            </li>
-                            
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Questions")"><i class="fa-solid fa-question me-2"></i> Questions</a>
-                            </li>
-
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Quizzes")"><i class="fa-solid fa-square-poll-vertical me-2"></i> Quiz Results</a>
-                            </li>
-                            <li>
-                            <a class="menu-item" href="@Url.Action("Index", "Answers")"><i class="fa-solid fa-face-smile me-2"></i> Answers</a>
-                            </li>
-
-                            <li>
-                                <a class="menu-item" href="@Url.Action("Index", "Users")"><i class="fa-solid fa-lock me-2"></i> Admins</a>
-                            </li>
-
-                        </ul>
-                    </div>
                 </div>
             </div>
-
+        </div>
+        <div class="sidebar collapse in show pt-6" id="navbarToggleExternalContent">
+            <div class="position-absolute start-0 col-md-2 mx-auto p-3 shadow w-25" style="color:white; background-color:#01384D">
+                <div class="menu accordion active" style="color:white;">
+                    <ul class="menu-list">
+                        <li><a class="menu-item" href="@Url.Action("Index", "Users")"><i class="fa-solid fa-user me-2"></i> Users </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Categories")"><i class="fa-solid fa-layer-group me-2"> </i> Categories </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Books")"><i class="fa-solid fa-book me-2"></i> Books </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Articles")"><i class="fa-solid fa-newspaper me-2"></i> Articles </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Videos")"><i class="fa-solid fa-video me-2"></i> Videos </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Audios")"><i class="fa-solid fa-file-audio me-2"></i> Audios </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Certificates")"><i class="fa-solid fa-certificate me-2"></i> Certificates </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Quizzes")"><i class="fa-solid fa-brain me-2"></i> Quizzes </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Questions")"><i class="fa-solid fa-question me-2"></i> Questions </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "QuizResults")"><i class="fa-solid fa-square-poll-vertical me-2"></i> Quiz Results </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Answers")"><i class="fa-solid fa-face-smile me-2"></i> Answers </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Users")"><i class="fa-solid fa-lock me-2"></i> Admins </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/fastbootstrap@1.1.2/dist/js/fastbootstrap.min.js" integrity="sha256-+c+/OCMmtlZadi89VaV1yUOkk1T4BD2pwBFpY3OcrqI=" crossorigin="anonymous"></script>
