@@ -13,20 +13,14 @@
     <script src="https://kit.fontawesome.com/15cb85390e.js" crossorigin="anonymous"></script>
     <title>Bootstrap demo</title>
     <style>
-        #submenu {
-            transition: all 0.1s ease;
-        }
-
-        #submenu:hover {
-            background-color: #F8B451;
-            color: whitesmoke;
-        }
-
         .menu-list li a:hover {
             background-color: #F8B451;
             color: whitesmoke;
         }
 
+        .menu-list li a:active {
+            background-color: #F39B16;
+        }
         .menu-item {
             color: white;
             transition: all 0.2s ease;
@@ -36,13 +30,15 @@
             color: white;
         }
 
-        .sidebar .menu-list {
-            height: 89.5vh;
+        .side{
+            color:white;
+            background-color: #01384D;
+            height: 92.5vh;
         }
     </style>
 </head>
 <body style="background-color:#fff">
-    <nav class="navbar navbar-dark" style="background-color: #01384D">
+    <nav class="navbar" style="background-color: #01384D">
         <div class="container-fluid d-flex justify-content-between">
             <div> <i class="fas fas-user"> <img src="~/Images/Logos/NabeeyLogo.png" style="color:white" width="40"  alt="Logo"/> </i> </div>
             <div>
@@ -61,21 +57,21 @@
             </div>
         </div>
         <div class="sidebar collapse in show pt-6" id="navbarToggleExternalContent">
-            <div class="position-absolute start-0 col-md-2 mx-auto p-3 shadow w-25" style="color:white; background-color:#01384D">
+            <div class="side position-fixed start-0 col-md-2 p-3 w-25">
                 <div class="menu accordion active" style="color:white;">
                     <ul class="menu-list">
-                        <li><a class="menu-item" href="@Url.Action("Index", "Users")"><i class="fa-solid fa-user me-2"></i> Users </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Categories")"><i class="fa-solid fa-layer-group me-2"> </i> Categories </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Books")"><i class="fa-solid fa-book me-2"></i> Books </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Articles")"><i class="fa-solid fa-newspaper me-2"></i> Articles </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Videos")"><i class="fa-solid fa-video me-2"></i> Videos </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Audios")"><i class="fa-solid fa-file-audio me-2"></i> Audios </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Certificates")"><i class="fa-solid fa-certificate me-2"></i> Certificates </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Quizzes")"><i class="fa-solid fa-brain me-2"></i> Quizzes </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Questions")"><i class="fa-solid fa-question me-2"></i> Questions </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "QuizResults")"><i class="fa-solid fa-square-poll-vertical me-2"></i> Quiz Results </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Answers")"><i class="fa-solid fa-face-smile me-2"></i> Answers </a></li>
-                        <li><a class="menu-item" href="@Url.Action("Index", "Users")"><i class="fa-solid fa-lock me-2"></i> Admins </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Users", new { index = 1 })"><i class="fa-solid fa-user me-2"></i> Users </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Categories", new { index = 1 })"><i class="fa-solid fa-layer-group me-2"> </i> Categories </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Books", new { index = 1 })"><i class="fa-solid fa-book me-2"></i> Books </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Articles", new { index = 1 })"><i class="fa-solid fa-newspaper me-2"></i> Articles </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Videos", new { index = 1 })"><i class="fa-solid fa-video me-2"></i> Videos </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Audios", new { index = 1 })"><i class="fa-solid fa-file-audio me-2"></i> Audios </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Certificates", new { index = 1 })"><i class="fa-solid fa-certificate me-2"></i> Certificates </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Quizzes", new { index = 1 })"><i class="fa-solid fa-brain me-2"></i> Quizzes </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Questions", new { index = 1 })"><i class="fa-solid fa-question me-2"></i> Questions </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "QuizResults", new { index = 1 })"><i class="fa-solid fa-square-poll-vertical me-2"></i> Quiz Results </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Answers", new { index = 1 })"><i class="fa-solid fa-face-smile me-2"></i> Answers </a></li>
+                        <li><a class="menu-item" href="@Url.Action("Index", "Users", new { index = 1 })"><i class="fa-solid fa-lock me-2"></i> Admins </a></li>
                     </ul>
                 </div>
             </div>

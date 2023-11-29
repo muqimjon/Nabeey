@@ -1,11 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nabeey.Service.Interfaces;
 
 namespace Nabeey.Web.Controllers;
 
 public class AnswersController : Controller
 {
-    public IActionResult Index()
+    private readonly IAnswerService answerService;
+    public AnswersController(IAnswerService answerService)
     {
-        return View();
+        this.answerService = answerService;
     }
+
+    public async ValueTask<IActionResult> Index()
+    =>  View(await answerService.RetrieveAllAsync(
+        new Domain.Configurations.PaginationParams
+        {
+            PageIndex = 1,
+            PageSize = 10
+        }));
+
+    [HttpPost]
+    public async ValueTask<IActionResult> Index(int index)
+    => View(await answerService.RetrieveAllAsync(
+        new Domain.Configurations.PaginationParams
+        {
+            PageIndex = index,
+            PageSize = 10
+        }));
 }

@@ -98,7 +98,7 @@ public class UserService : IUserService
 	public async ValueTask<IEnumerable<UserResultDto>> RetrieveAllAsync(PaginationParams @params, string search = null)
 	{
 		var users = await this.userRepository.SelectAll(includes: new[] { "Asset" })
-			.ToPaginate(@params)
+			.ToPagedList(@params)
 			.ToListAsync();
 
 		if (!string.IsNullOrEmpty(search))

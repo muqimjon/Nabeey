@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Nabeey.DataAccess.Contexts;
+using Nabeey.Service.Extensions;
+using Nabeey.Service.Helpers;
 using Nabeey.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,8 +22,12 @@ builder.Services.AddControllersWithViews()
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
 
+PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 
 var app = builder.Build();
+
+// Get Accessor
+HttpContextExtensions.InitAccessor(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Nabeey.Service.DTOs.Users;
+﻿using Nabeey.Service.DTOs.Users;
+using Microsoft.AspNetCore.Mvc;
 using Nabeey.Service.Interfaces;
+using Nabeey.Domain.Configurations;
 
 namespace Nabeey.Web.Controllers;
 
@@ -13,8 +14,21 @@ public class UsersController : Controller
     }
 
     public async ValueTask<IActionResult> Index()
-        => View(await userService.RetrieveAllAsync());
+        => View(await userService.RetrieveAllAsync(
+            new PaginationParams
+            {
+                PageIndex = 1,
+                PageSize = 10
+            }));
 
+    [HttpGet("Index")]
+    public async ValueTask<IActionResult> Index(int index)
+    => View(await userService.RetrieveAllAsync(
+        new PaginationParams
+        {
+            PageIndex = index,
+            PageSize = 10
+        }));
 
     public async ValueTask<IActionResult> Details(long id)
         => View(await userService.RetrieveByIdAsync(id));
