@@ -11,7 +11,7 @@
     }
 </style>
 
-<form asp-controller="Users" asp-action="Create" method="post" class="d-sm-grid m-5">
+<form asp-controller="Users" asp-action="Create" method="post" class="d-sm-grid m-5" enctype="multipart/form-data">
     <h1>Create User</h1>
     <div class="border-bottom mb-5"></div>
     <div class="row mb-4">
@@ -39,14 +39,16 @@
     <div class="row mb-4">
         <div class="col assword-toggle">
             <label asp-for="Password" class="form-label">Password</label>
-            <input type="password" asp-for="Password" class="form-control" required/>
+            <input type="password" asp-for="Password" class="form-control" required />
             <span class="toggle-button fa-regular fa-eye-slash" style="color:#CED4DA" onclick="togglePassword()" />
         </div>
+
         <div class="col">
             <label asp-for="Image" class="form-label">Drop Image here or</label>
             <input type="file" asp-for="Image" style="color:#CED4DA" class="form-control" accept="image/*" />
         </div>
     </div>
+
     <div class="btn-group-vertical align-items-center m-4">
         <button type="submit" class="btn btn-success mb-4 w-25">Submit</button>
         <a asp-action="Index" class="btn btn-secondary btn-block w-25">Cancel</a>
