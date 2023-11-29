@@ -1,17 +1,16 @@
-﻿
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Nabeey.DataAccess.IRepositories;
-using Nabeey.Domain.Configurations;
-using Nabeey.Domain.Entities.Answers;
-using Nabeey.Domain.Entities.Assets;
-using Nabeey.Domain.Entities.Questions;
+﻿using AutoMapper;
 using Nabeey.Domain.Enums;
-using Nabeey.Service.DTOs.Answers;
-using Nabeey.Service.DTOs.Assets;
-using Nabeey.Service.Exceptions;
-using Nabeey.Service.Extensions;
 using Nabeey.Service.Interfaces;
+using Nabeey.Service.Extensions;
+using Nabeey.Service.Exceptions;
+using Nabeey.Service.DTOs.Assets;
+using Nabeey.Service.DTOs.Answers;
+using Nabeey.Domain.Configurations;
+using Microsoft.EntityFrameworkCore;
+using Nabeey.Domain.Entities.Assets;
+using Nabeey.Domain.Entities.Answers;
+using Nabeey.DataAccess.IRepositories;
+using Nabeey.Domain.Entities.Questions;
 
 namespace Nabeey.Service.Services;
 
@@ -52,6 +51,7 @@ public class AnswerService : IAnswerService
                 FileName = imageAsset.FileName,
                 FilePath = imageAsset.FilePath,
             };
+
             mappedAnswer.AssetId = imageAsset.Id;
             mappedAnswer.Asset = createImage;
         }
@@ -84,14 +84,12 @@ public class AnswerService : IAnswerService
 
         if (uploadedImage.Id > 0)
         {
-            if (answer.Asset == null)
-            {
-                answer.Asset = new Asset();
-            }
+            answer.Asset ??= new Asset();
             answer.AssetId = uploadedImage.Id;
             answer.Asset.FileName = uploadedImage.FileName;
             answer.Asset.FilePath = uploadedImage.FilePath;
         }
+
         this.repository.Update(answer);
         await this.repository.SaveAsync();
 

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Nabeey.DataAccess.Contexts;
+using Nabeey.Service.Extensions;
 using Nabeey.Service.Helpers;
 using Nabeey.Web.Extensions;
 using Nabeey.Web.Middlewares;
@@ -40,6 +41,10 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddJwt(builder.Configuration);
 
 var app = builder.Build();
+
+
+// Get Accessor
+HttpContextExtensions.InitAccessor(app);
 
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 

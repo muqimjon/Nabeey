@@ -1,6 +1,6 @@
-﻿@using Nabeey.Service.DTOs.Users;
+﻿@using Nabeey.Service.DTOs.Answers
 
-@model IEnumerable<UserResultDto>
+@model IEnumerable<AnswerResultDto>
 @{
     var defaultImage = "./Images/Logos/profile.png";
     int tr = 1;
@@ -19,11 +19,9 @@
             <tr>
                 <td>T/r</td>
                 <td>Image</td>
-                <td>First name</td>
-                <td>Last name</td>
-                <td>Phone</td>
-                <td>Email</td>
-                <td>Role</td>
+                <td>Question</td>
+                <td>Is Correct</td>
+                <td>Text</td>
                 <td>Actions</td>
             </tr>
         </thead>
@@ -38,17 +36,15 @@
                              style="width: 40px; height: 40px"
                              class="rounded-circle" />
                     </td>
-                    <td class="pt-3">@Html.DisplayFor(i => item.FirstName)</td>
-                    <td class="pt-3">@Html.DisplayFor(i => item.LastName)</td>
-                    <td class="pt-3">@Html.DisplayFor(i => item.Phone)</td>
-                    <td class="pt-3">@Html.DisplayFor(i => item.Email)</td>
-                    <td class="pt-3">@Html.DisplayFor(i => item.UserRole)</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.Question.Text)</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.IsTrue)</td>
+                    <td class="pt-3">@Html.DisplayFor(i => item.Text)</td>
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-outline-primary" href="@Url.Action("Detail", "Users", item.Id)">Detail</a>
                             <a class="btn btn-outline-warning" href="@Url.Action("Update", "Users", item.Id)">Update</a>
 
-                            <form asp-controller="Users" asp-route-id="@item.Id" asp-action="Delete" method="post">
+                            <form asp-controller="Answers" asp-route-id="@item.Id" asp-action="Delete" method="post">
                                 <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Ma\'lumotni o\'chirishga ishonchingiz komilmi?');">Delete</button>
                             </form>
                         </div>

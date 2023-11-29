@@ -18,4 +18,13 @@ public class AnswersController : Controller
             PageIndex = 1,
             PageSize = 10
         }));
+
+    [HttpPost]
+    public async ValueTask<IActionResult> Index(int index)
+    => View(await answerService.RetrieveAllAsync(
+        new Domain.Configurations.PaginationParams
+        {
+            PageIndex = index,
+            PageSize = 10
+        }));
 }
