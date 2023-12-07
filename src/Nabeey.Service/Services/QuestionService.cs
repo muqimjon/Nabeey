@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Nabeey.DataAccess.IRepositories;
-using Nabeey.Domain.Configurations;
-using Nabeey.Domain.Entities.Assets;
-using Nabeey.Domain.Entities.Questions;
 using Nabeey.Domain.Enums;
-using Nabeey.Service.DTOs.Assets;
-using Nabeey.Service.DTOs.Questions;
 using Nabeey.Service.Exceptions;
 using Nabeey.Service.Extensions;
 using Nabeey.Service.Interfaces;
+using Nabeey.Service.DTOs.Assets;
+using Nabeey.Domain.Configurations;
+using Nabeey.Domain.Entities.Assets;
+using Nabeey.Service.DTOs.Questions;
+using Microsoft.EntityFrameworkCore;
+using Nabeey.DataAccess.IRepositories;
+using Nabeey.Domain.Entities.Questions;
 
 namespace Nabeey.Service.Services;
 
@@ -104,9 +104,7 @@ public class QuestionService : IQuestionService
 	public async ValueTask<IEnumerable<QuestionResultDto>> RetrieveAllAsync(PaginationParams @params, Filter filter, string search = null)
 	{
 		var questions = await repository
-		  .SelectAll()
-		  .Include(q => q.Answers)
-		  .Include(q => q.Image)
+		  .SelectAll(includes: new[] { "Answers", "Image" })
 		  .ToPaginate(@params)
 		  .ToListAsync();
 
