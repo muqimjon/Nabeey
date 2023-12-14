@@ -1,12 +1,11 @@
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Nabeey.DataAccess.Contexts;
-using Nabeey.Service.Extensions;
-using Nabeey.Service.Helpers;
 using Nabeey.Web.Extensions;
 using Nabeey.Web.Middlewares;
-using Nabeey.Web.Models;
+using Nabeey.Service.Helpers;
+using Nabeey.Service.Extensions;
+using InfoZest.WebApi.Extensions;
+using Nabeey.DataAccess.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +40,6 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddJwt(builder.Configuration);
 
 var app = builder.Build();
-
 
 // Get Accessor
 HttpContextExtensions.InitAccessor(app);
