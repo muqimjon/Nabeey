@@ -41,6 +41,8 @@ builder.Services.AddJwt(builder.Configuration);
 
 var app = builder.Build();
 
+app.MigrateDatabase();
+
 // Get Accessor
 HttpContextExtensions.InitAccessor(app);
 
