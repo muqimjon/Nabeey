@@ -6,8 +6,6 @@ name: Publish
 on:
   push:
     branches: [ "publish" ]
-  pull_request:
-    branches: [ "publish" ]
 
 jobs:
   build:
@@ -44,7 +42,7 @@ jobs:
   #     run: dotnet test --no-restore
   dockerize:
     name: Dockerize
-    # needs: test
+    needs: build
     runs-on: ubuntu-latest
     env:
       USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -61,4 +59,23 @@ jobs:
         run: docker login -u $USERNAME -p $PASSWORD #--password-stdin
       - name: Push Docker image
         run: docker push $USERNAME/nabeey
+
+  deploy:
+    name: Deploy
+    needs: dockerize
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into AWS Ubuntu Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd ~/nabeey
+            docker pull muqimjon/nabeey
+            docker-compose up -d
+            docker rmi $(docker images -f dangling=true -q)
   
