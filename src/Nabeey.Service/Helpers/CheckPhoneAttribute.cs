@@ -1,4 +1,4 @@
-﻿using Recore.Service.Exceptions;
+﻿using Nabeey.Service.Exceptions;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
