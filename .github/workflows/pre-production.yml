@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-
+    name: Test
     runs-on: ubuntu-latest
 
     steps:
@@ -24,3 +24,20 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+  # test:
+  #   name: Test
+  #   needs: build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout Code
+  #     uses: actions/checkout@v3
+  #   - name: Setup .NET 6
+  #     uses: actions/setup-dotnet@v3
+  #     with:
+  #       dotnet-version: 6.0.x
+  #   - name: Restore dependencies
+  #     run: dotnet restore
+  #   - name: Testing
+  #     run: dotnet test --no-restore
