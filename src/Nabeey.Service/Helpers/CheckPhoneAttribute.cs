@@ -1,6 +1,6 @@
 ﻿using Nabeey.Service.Exceptions;
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 public class CheckPhoneAttribute : ValidationAttribute
 {

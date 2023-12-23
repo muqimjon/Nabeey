@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Nabeey.DataAccess.IRepositories;
-using Nabeey.Domain.Configurations;
-using Nabeey.Domain.Entities.Assets;
-using Nabeey.Domain.Entities.Users;
+using Service.Helpers;
 using Nabeey.Domain.Enums;
-using Nabeey.Service.DTOs.Assets;
 using Nabeey.Service.DTOs.Users;
 using Nabeey.Service.Exceptions;
 using Nabeey.Service.Extensions;
 using Nabeey.Service.Interfaces;
-using Service.Helpers;
+using Nabeey.Service.DTOs.Assets;
+using Nabeey.Domain.Configurations;
+using Nabeey.Domain.Entities.Users;
+using Nabeey.Domain.Entities.Assets;
+using Microsoft.EntityFrameworkCore;
+using Nabeey.DataAccess.IRepositories;
 
 namespace Nabeey.Service.Services;
 
@@ -48,6 +48,8 @@ public class UserService : IUserService
             mappedUser.Asset = createImage;
         }
 
+        if(!userRepository.SelectAll().Any())
+            mappedUser.UserRole = Role.Admin;
 
         mappedUser.PasswordHash = PasswordHash.Encrypt(dto.Password);
 		await this.userRepository.InsertAsync(mappedUser);
