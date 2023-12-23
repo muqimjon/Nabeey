@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Nabeey.Domain.Configurations;
-using Nabeey.Service.DTOs.Answers;
 using Nabeey.Service.Interfaces;
-using Nabeey.Web.Models;
+using Nabeey.Service.DTOs.Answers;
+using Nabeey.Domain.Configurations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nabeey.Web.Controllers;
 
@@ -15,7 +15,9 @@ public class AnswersController : BaseController
 		this.answerService = answerService;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(AnswerResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async Task<IActionResult> PostAsync([FromQuery] AnswerCreationDto dto)
 		=> Ok(new Response
 		{
@@ -24,7 +26,9 @@ public class AnswersController : BaseController
 			Data = await this.answerService.AddAsync(dto)
 		});
 
-	[HttpPut("update")]
+    [ProducesResponseType(typeof(AnswerResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("update")]
 	public async Task<IActionResult> UpdateAsync([FromQuery] AnswerUpdateDto dto)
 		=> Ok(new Response
 		{
@@ -33,7 +37,9 @@ public class AnswersController : BaseController
 			Data = await this.answerService.ModifyAsync(dto)
 		});
 
-	[HttpDelete("delete/{id:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpDelete("delete/{id:long}")]
 	public async Task<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
 		{
@@ -42,34 +48,39 @@ public class AnswersController : BaseController
 			Data = await this.answerService.RemoveAsync(id)
 		});
 
-		[AllowAnonymous]
-		[HttpGet("get/{id:long}")]
-		public async Task<IActionResult> GetAsync(long id)
-			=> Ok(new Response
-			{
-				StatusCode = 200,
-				Message = "Success",
-				Data = await this.answerService.RetrieveByIdAsync(id)
+    [ProducesResponseType(typeof(AnswerResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
+	[HttpGet("get/{id:long}")]
+	public async Task<IActionResult> GetAsync(long id)
+		=> Ok(new Response
+		{
+			StatusCode = 200,
+			Message = "Success",
+			Data = await this.answerService.RetrieveByIdAsync(id)
+		});
+
+    [ProducesResponseType(typeof(IEnumerable<AnswerResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
+	[HttpGet("get-all")]
+	public async ValueTask<IActionResult> GetAllAsync(
+		[FromQuery] PaginationParams @params)
+		=> Ok(new Response
+		{
+			StatusCode = 200,
+			Message = "Success",
+			Data = await this.answerService.RetrieveAllAsync(@params)
 			});
 
-		[AllowAnonymous]
-		[HttpGet("get-all")]
-		public async ValueTask<IActionResult> GetAllAsync(
-			[FromQuery] PaginationParams @params)
-			=> Ok(new Response
-			{
-				StatusCode = 200,
-				Message = "Success",
-				Data = await this.answerService.RetrieveAllAsync(@params)
-			});
-
-		[AllowAnonymous]
-		[HttpGet("get-by-questionId/{questionId:long}")]
-		public async ValueTask<IActionResult> GetAllByContentIdAsync(long questionId)
-			=> Ok(new Response
-			{
-				StatusCode = 200,
-				Message = "Success",
-				Data = await this.answerService.RetrieveAllByQuestionIdAsync(questionId)
-			});
+    [ProducesResponseType(typeof(IEnumerable<AnswerResultDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
+	[HttpGet("get-by-questionId/{questionId:long}")]
+	public async ValueTask<IActionResult> GetAllByContentIdAsync(long questionId)
+		=> Ok(new Response
+		{
+			StatusCode = 200,
+			Message = "Success",
+			Data = await this.answerService.RetrieveAllByQuestionIdAsync(questionId)
+		});
 }

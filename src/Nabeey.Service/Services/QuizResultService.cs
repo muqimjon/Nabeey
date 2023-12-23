@@ -54,13 +54,13 @@ public class QuizResultService : IQuizResultService
 		var incorrectAnswers = quizQuestionCount - correctAnswers;
 		var ball = Math.Round((double)(correctAnswers * 100) / quizQuestionCount);
 
-		ResultDto resultDto = new()
+        ResultDto resultDto = new()
 		{
 			CorrectAnswers = correctAnswers,
 			IncorrectAnswers = incorrectAnswers,
 			Ball = ball,
 			QuestionCount = quizQuestionCount,
-			Quiz = this.mapper.Map<QuizResultDto>(quiz)
+			Quiz = this.mapper.Map<DTOs.Quizzes.QuizResultDto>(quiz)
 		};
 
 		var existQuizResult = await this.quizResultRepository.SelectAsync(quizResult => quizResult.QuizId.Equals(quizId));
@@ -98,7 +98,7 @@ public class QuizResultService : IQuizResultService
 				IncorrectAnswers = quizResult.IncorrectAnswerCount,
 				Ball = quizResult.Ball,
 				QuestionCount = quizQuestionCount,
-				Quiz = this.mapper.Map<QuizResultDto>(quizResult.Quiz),
+				Quiz = this.mapper.Map<DTOs.Quizzes.QuizResultDto>(quizResult.Quiz),
 			});
 		}
 
@@ -116,9 +116,9 @@ public class QuizResultService : IQuizResultService
 			var user = await this.userRepository.SelectAsync(user => user.Id.Equals(userId));
 
 			var itemResult = new UserRatingDto
-			{
+            {
 				Ball = item.Sum(t => t.Ball),
-				User = this.mapper.Map<UserResultDto>(user)
+				User = this.mapper.Map<DTOs.Users.QuizResultDto>(user)
 			};
 			result.Add(itemResult);
 		}
@@ -141,9 +141,9 @@ public class QuizResultService : IQuizResultService
 			var user = await this.userRepository.SelectAsync(user => user.Id.Equals(userId));
 
 			var itemResult = new UserRatingDto
-			{
+            {
 				Ball = item.Sum(t => t.Ball),
-				User = this.mapper.Map<UserResultDto>(user)
+				User = this.mapper.Map<DTOs.Users.QuizResultDto>(user)
 			};
 			result.Add(itemResult);
 		}

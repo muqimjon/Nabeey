@@ -13,7 +13,9 @@ public class AuthController : BaseController
 		this.authService = authService;
 	}
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpPost("login")]
 	public async Task<IActionResult> GenerateTokenAsync(string phone, string password)
 	{ 

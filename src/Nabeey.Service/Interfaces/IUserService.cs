@@ -6,11 +6,11 @@ namespace Nabeey.Service.Interfaces;
 
 public interface IUserService
 {
-	ValueTask<UserResultDto> AddAsync(UserCreationDto dto);
-	ValueTask<UserResultDto> ModifyAsync(UserUpdateDto dto);
+	ValueTask<QuizResultDto> AddAsync(UserCreationDto dto);
+	ValueTask<QuizResultDto> ModifyAsync(UserUpdateDto dto);
 	ValueTask<bool> RemoveAsync(long id);
-	ValueTask<UserResultDto> RetrieveByIdAsync(long id);
-	ValueTask<IEnumerable<UserResultDto>> RetrieveAllAsync(PaginationParams @params, string search = null);
-	ValueTask<IEnumerable<UserResultDto>> RetrieveAllAsync();
-	ValueTask<UserResultDto> UpgradeRoleAsync(long id, Role role);
+	ValueTask<QuizResultDto> RetrieveByIdAsync(long id);
+	ValueTask<IEnumerable<QuizResultDto>> RetrieveAllAsync(PaginationParams @params, string search = null);
+	ValueTask<IEnumerable<QuizResultDto>> RetrieveAllAsync();
+	ValueTask<QuizResultDto> UpgradeRoleAsync(long id, Role role);
 }

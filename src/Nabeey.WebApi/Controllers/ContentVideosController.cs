@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Nabeey.Service.Interfaces;
 using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.ContentVideos;
-using Nabeey.Service.Interfaces;
-using Nabeey.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nabeey.Web.Controllers;
 
@@ -15,7 +15,9 @@ public class ContentVideosController : BaseController
 		this.contentVideoService = contentVideoService;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(ContentVideoResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async Task<IActionResult> PostAsync(ContentVideoCreationDto dto)
 		   => Ok(new Response
 		   {
@@ -24,7 +26,9 @@ public class ContentVideosController : BaseController
 			   Data = await this.contentVideoService.AddAsync(dto)
 		   });
 
-	[HttpDelete("delete/{id:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpDelete("delete/{id:long}")]
 	public async Task<IActionResult> DeleteAsync(long id)
 	   => Ok(new Response
 	   {
@@ -33,7 +37,9 @@ public class ContentVideosController : BaseController
 		   Data = await this.contentVideoService.RemoveAsync(id)
 	   });
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(ContentVideoResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async Task<IActionResult> GetAsync(long id)
 	  => Ok(new Response
@@ -43,7 +49,9 @@ public class ContentVideosController : BaseController
 		  Data = await this.contentVideoService.RetrieveByIdAsync(id)
 	  });
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ContentVideoResultDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get-by-categoryId/{categorytId:long}")]
 	public async Task<IActionResult> GetByCategoryIdAsync(long categorytId)
 	  => Ok(new Response
@@ -53,7 +61,8 @@ public class ContentVideosController : BaseController
 		  Data = await this.contentVideoService.RetrieveAllByCategoryIdAsync(categorytId)
 	  });
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ContentVideoResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
 	[HttpGet("get-all")]
 	public async ValueTask<IActionResult> GetAllAsync(
 		[FromQuery] PaginationParams @params,

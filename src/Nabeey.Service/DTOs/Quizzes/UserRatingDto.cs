@@ -6,5 +6,5 @@ public class UserRatingDto
 {
 	public int Rating { get; set; }
 	public double Ball { get; set; }
-	public UserResultDto User { get; set; }
+	public QuizResultDto User { get; set; }
 }

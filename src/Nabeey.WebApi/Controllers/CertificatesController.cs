@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
+﻿using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Nabeey.Domain.Enums;
-using Nabeey.Service.DTOs.Assets;
-using Nabeey.Service.DTOs.Certificates;
-using Nabeey.Service.Helpers;
 using Nabeey.Service.Interfaces;
-using Nabeey.Web.Models;
+using Nabeey.Service.DTOs.Certificates;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nabeey.Web.Controllers;
 
@@ -19,6 +14,8 @@ public class CertificatesController : BaseController
         this.certificateService = certificateService;
     }
 
+    [ProducesResponseType(typeof(CertificateResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [AllowAnonymous]
     [HttpPost("generate")]
     public async ValueTask<IActionResult> Create(CertificateCreationDto dto)
@@ -29,6 +26,8 @@ public class CertificatesController : BaseController
          Data = await certificateService.GenerateAsync(dto)
      });
 
+    [ProducesResponseType(typeof(CertificateResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [AllowAnonymous]
     [HttpGet("get-by-id/{id:long}")]
     public async ValueTask<IActionResult> GetById(long id)
@@ -39,6 +38,7 @@ public class CertificatesController : BaseController
          Data = await certificateService.RetrieveByIdAsync(id)
      });
 
+    [ProducesResponseType(typeof(IEnumerable<CertificateResultDto>), StatusCodes.Status200OK)]
     [AllowAnonymous]
     [HttpGet("get-all")]
     public async ValueTask<IActionResult> GetCertificate()

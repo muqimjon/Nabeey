@@ -10,5 +10,5 @@ public class ArticleResultDto
 	public string Text { get; set; }
 	public ContentCategoryResultDto Category { get; set; }
 	public AssetResultDto Image { get; set; }
-	public UserResultDto User { get; set; }
+	public QuizResultDto User { get; set; }
 }

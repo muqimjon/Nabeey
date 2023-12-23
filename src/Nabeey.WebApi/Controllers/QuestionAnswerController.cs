@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Nabeey.Service.DTOs.QuestionAnswers;
+﻿using Nabeey.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 using Nabeey.Service.Interfaces;
-using Nabeey.Web.Models;
+using Nabeey.Service.DTOs.QuestionAnswers;
 
 namespace Nabeey.Web.Controllers;
 
@@ -13,7 +13,9 @@ public class QuestionAnswerController : BaseController
 		this.service = service;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(QuestionAnswerResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async ValueTask<IActionResult> PostAsync(QuestionAnswerCreationDto dto)
 		=> Ok(new Response
 		{
@@ -22,7 +24,9 @@ public class QuestionAnswerController : BaseController
 			Data = await this.service.AddAsync(dto)
 		});
 
-	[HttpPut("update")]
+    [ProducesResponseType(typeof(QuestionAnswerResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("update")]
 	public async ValueTask<IActionResult> UpdateAsync(QuestionAnswerUpdateDto dto)
 		=> Ok(new Response
 		{

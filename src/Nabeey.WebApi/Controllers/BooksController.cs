@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.Books;
 using Nabeey.Service.Interfaces;
-using Nabeey.Web.Models;
+using Nabeey.Domain.Configurations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nabeey.Web.Controllers;
 
@@ -15,7 +15,9 @@ public class BooksController : BaseController
 		this.bookService = bookService;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(BookResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async Task<IActionResult> PostAsync([FromQuery] BookCreationDto dto)
 		=> Ok(new Response
 		{
@@ -24,7 +26,9 @@ public class BooksController : BaseController
 			Data = await this.bookService.AddAsync(dto)
 		});
 
-	[HttpPut("update")]
+    [ProducesResponseType(typeof(BookResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("update")]
 	public async Task<IActionResult> UpdateAsync([FromQuery] BookUpdateDto dto)
 		=> Ok(new Response
 		{
@@ -33,7 +37,9 @@ public class BooksController : BaseController
 			Data = await this.bookService.ModifyAsync(dto)
 		});
 
-	[HttpDelete("delete/{id:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpDelete("delete/{id:long}")]
 	public async Task<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
 		{
@@ -42,7 +48,9 @@ public class BooksController : BaseController
 			Data = await this.bookService.DeleteAsync(id)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(BookResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async Task<IActionResult> GetAsync(long id)
 		=> Ok(new Response
@@ -52,7 +60,8 @@ public class BooksController : BaseController
 			Data = await this.bookService.RetrieveByIdAsync(id)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<BookResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
 	[HttpGet("get-all")]
 	public async ValueTask<IActionResult> GetAllAsync(
 		[FromQuery] PaginationParams @params,
@@ -64,8 +73,10 @@ public class BooksController : BaseController
 			Data = await this.bookService.RetrieveAllAsync(@params, search)
 		});
 
-		
-	[AllowAnonymous]
+
+    [ProducesResponseType(typeof(IEnumerable<BookResultDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get-by-categoryId/{categoryId:long}")]
 	public async ValueTask<IActionResult> GetAllByCategoryIdAsync(long categoryId)
 		=> Ok(new Response

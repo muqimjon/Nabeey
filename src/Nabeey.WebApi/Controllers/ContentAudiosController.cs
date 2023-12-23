@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Nabeey.Service.Interfaces;
 using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.ContentAudios;
-using Nabeey.Service.Interfaces;
-using Nabeey.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nabeey.Web.Controllers;
 
@@ -15,7 +15,9 @@ public class ContentAudiosController : BaseController
 		this.contentAudioService = contentAudioService;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(ContentAudioResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async ValueTask<IActionResult> PostAsync([FromForm] ContentAudioCreationDto dto)
 	   => Ok(new Response
 	   {
@@ -24,7 +26,9 @@ public class ContentAudiosController : BaseController
 		   Data = await this.contentAudioService.AddAsync(dto)
 	   });
 
-	[HttpDelete("delete/{id:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpDelete("delete/{id:long}")]
 	public async ValueTask<IActionResult> DeleteAsync(long id)
 	   => Ok(new Response
 	   {
@@ -33,7 +37,9 @@ public class ContentAudiosController : BaseController
 		   Data = await this.contentAudioService.RemoveAsync(id)
 	   });
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(ContentAudioResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async ValueTask<IActionResult> GetAsync(long id)
 	  => Ok(new Response
@@ -43,7 +49,8 @@ public class ContentAudiosController : BaseController
 		  Data = await this.contentAudioService.RetrieveByIdAsync(id)
 	  });
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ContentAudioResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
 	[HttpGet("get-all")]
 	public async ValueTask<IActionResult> GetAllAsync(
 		[FromQuery] PaginationParams @params,
@@ -55,8 +62,8 @@ public class ContentAudiosController : BaseController
 			  Data = await this.contentAudioService.RetrieveAsync(@params, filter, search)
 		  });
 
-
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ContentAudioResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
 	[HttpGet("get-by-categoryId/{categoryId:long}")]
 	public async ValueTask<IActionResult> GetByCategoryIdAsync(long categoryId)
 	  => Ok(new Response

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Nabeey.Service.Interfaces;
 using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.Questions;
-using Nabeey.Service.Interfaces;
-using Nabeey.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nabeey.Web.Controllers;
 
@@ -15,7 +15,9 @@ public class QuestionsController : BaseController
 		this.questionService = questionService;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(QuestionResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async ValueTask<IActionResult> PostAsync([FromForm] QuestionCreationDto dto)
 		=> Ok(new Response
 		{
@@ -24,7 +26,9 @@ public class QuestionsController : BaseController
 			Data = await this.questionService.AddAsync(dto)
 		});
 
-	[HttpPut("update")]
+    [ProducesResponseType(typeof(QuestionResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("update")]
 	public async ValueTask<IActionResult> UpdateAsync([FromForm] QuestionUpdateDto dto)
 		=> Ok(new Response
 		{
@@ -33,7 +37,9 @@ public class QuestionsController : BaseController
 			Data = await this.questionService.ModifyAsync(dto)
 		});
 
-	[HttpDelete("delete/{id:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpDelete("delete/{id:long}")]
 	public async ValueTask<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
 		{
@@ -42,7 +48,9 @@ public class QuestionsController : BaseController
 			Data = await this.questionService.RemoveAsync(id)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(QuestionResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async ValueTask<IActionResult> GetAsync(long id)
 		=> Ok(new Response
@@ -52,7 +60,8 @@ public class QuestionsController : BaseController
 			Data = await this.questionService.RetrieveByIdAsync(id)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<QuestionResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
 	[HttpGet("get-all")]
 	public async ValueTask<IActionResult> GetAllAsync(
 		[FromQuery] PaginationParams @params,

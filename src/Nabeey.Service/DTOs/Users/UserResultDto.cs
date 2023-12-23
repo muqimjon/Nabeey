@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Nabeey.Domain.Enums;
+﻿using Nabeey.Domain.Enums;
 using Nabeey.Service.DTOs.Assets;
 
 namespace Nabeey.Service.DTOs.Users;
 
-public class UserResultDto
+public class QuizResultDto
 {
 	public long Id { get; set; }
 	public string FirstName { get; set; }
