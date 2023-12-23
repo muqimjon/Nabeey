@@ -6,6 +6,9 @@ using InfoZest.WebApi.Extensions;
 using Nabeey.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Nabeey.Service.Interfaces;
+using Nabeey.Domain.Entities.Users;
+using Nabeey.Service.DTOs.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.CustomSchemaIds(type => type.FullName); // Avtomatik skhemaID generatsiya qilish
+});
 
 // Add Authorization
 builder.Services.ConfigureSwagger();
@@ -47,6 +53,10 @@ app.MigrateDatabase();
 HttpContextExtensions.InitAccessor(app);
 
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
+
+//var userService = app.Services.GetRequiredService<IUserService>();
+//var adminInfo = app.Configuration.GetSection("AdminInfo").Get<UserCreationDto>();
+//await userService.AddAsync(adminInfo);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())

@@ -1,3 +1,4 @@
+using Nabeey.Domain.Enums;
 using Nabeey.Domain.Entities.Users;
 using Nabeey.Domain.Entities.Books;
 using Nabeey.Domain.Entities.Assets;
@@ -126,6 +127,16 @@ public class AppDbContext : DbContext
 			.HasOne(qq => qq.Question)
 			.WithMany()
 			.HasForeignKey(qq => qq.QuestionId);
-		#endregion
-	}
+        #endregion
+
+        Seed(modelBuilder);
+    }
+
+    private static void Seed(ModelBuilder modelBuilder)
+    {
+        // Seed the "Admin" user
+        modelBuilder.Entity<User>().HasData(
+            new User { Id=1, FirstName = "Admin", LastName = "Admin", Email = "admin@mail.com", Phone = "+998987654321", PasswordHash = "admin", UserRole = Role.Admin }
+			);
+    }
 }

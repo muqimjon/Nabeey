@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nabeey.Domain.Configurations;
-using Nabeey.Service.DTOs.Quizzes;
-using Nabeey.Service.Interfaces;
 using Nabeey.Web.Models;
+using Nabeey.Service.Interfaces;
+using Nabeey.Service.DTOs.Quizzes;
 
 namespace Nabeey.Web.Controllers;
 
@@ -15,7 +15,9 @@ public class QuizzesController : BaseController
 		this.quizService = quizService;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(QuizResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async ValueTask<IActionResult> PostAsync(QuizCreationDto dto)
 		=> Ok(new Response
 		{
@@ -24,7 +26,9 @@ public class QuizzesController : BaseController
 			Data = await this.quizService.AddAsync(dto)
 		});
 
-	[HttpPut("update")]
+    [ProducesResponseType(typeof(QuizResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("update")]
 	public async ValueTask<IActionResult> UpdateAsync(QuizUpdateDto dto)
 		=> Ok(new Response
 		{
@@ -33,7 +37,9 @@ public class QuizzesController : BaseController
 			Data = await this.quizService.ModifyAsync(dto)
 		});
 
-	[HttpDelete("delete/{id:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpDelete("delete/{id:long}")]
 	public async ValueTask<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
 		{
@@ -42,7 +48,9 @@ public class QuizzesController : BaseController
 			Data = await this.quizService.DeleteAsync(id)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(QuizResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async ValueTask<IActionResult> GetAsync(long id)
 		=> Ok(new Response
@@ -52,7 +60,8 @@ public class QuizzesController : BaseController
 			Data = await this.quizService.RetrieveByIdAsync(id)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<QuizResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
 	[HttpGet("get-all")]
 	public async ValueTask<IActionResult> GetAllAsync(
 	[FromQuery] PaginationParams @params,

@@ -15,7 +15,9 @@ public class ArticleController : BaseController
 		this.service = service;
 	}
 
-	[HttpPost("create")]
+    [ProducesResponseType(typeof(ArticleResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [HttpPost("create")]
 	public async Task<IActionResult> PostAsync([FromForm] ArticleCreationDto dto)
 		=> Ok(new Response
 		{
@@ -24,8 +26,9 @@ public class ArticleController : BaseController
 			Data = await this.service.AddAsync(dto)
 		});
 
-
-	[HttpPut("update")]
+    [ProducesResponseType(typeof(ArticleResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("update")]
 	public async Task<IActionResult> UpdateAsync([FromForm] ArticleUpdateDto dto)
 		=> Ok(new Response
 		{
@@ -34,8 +37,9 @@ public class ArticleController : BaseController
 			Data = await this.service.ModifyAsync(dto)
 		});
 
-
-	[HttpDelete("delete/{id:long}")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpDelete("delete/{id:long}")]
 	public async Task<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
 		{
@@ -44,8 +48,9 @@ public class ArticleController : BaseController
 			Data = await this.service.DeleteAsync(id)
 		});
 
-
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(ArticleResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async Task<IActionResult> GetAsync(long id)
 		=> Ok(new Response
@@ -55,8 +60,8 @@ public class ArticleController : BaseController
 			Data = await this.service.RetrieveAsync(id)
 		});
 
-
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ArticleResultDto>), StatusCodes.Status200OK)]
+    [AllowAnonymous]
 	[HttpGet("get-all")]
 	public async Task<IActionResult> GetAllAsync(
 		[FromQuery] PaginationParams @params,
@@ -68,7 +73,9 @@ public class ArticleController : BaseController
 			Data = await this.service.RetrieveAllAsync(@params, filter, search)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ArticleResultDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get-by-user/{userId:long}")]
 	public async Task<IActionResult> GetAllByUserIdAsync(long userId)
 		=> Ok(new Response
@@ -78,7 +85,9 @@ public class ArticleController : BaseController
 			Data = await this.service.RetrieveAllByUserIdAsync(userId)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ArticleResultDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [AllowAnonymous]
 	[HttpGet("get-by-category/{categoryId:long}")]
 	public async Task<IActionResult> GetAllByCategoryIdAsync(long categoryId)
 		=> Ok(new Response
@@ -88,7 +97,8 @@ public class ArticleController : BaseController
 			Data = await this.service.RetrieveAllByCategoryIdAsync(categoryId)
 		});
 
-	[AllowAnonymous]
+    [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
+    [AllowAnonymous]
     [HttpGet("files/{fileName}")]
 	public IActionResult DownloadFile(string fileName)
 	{

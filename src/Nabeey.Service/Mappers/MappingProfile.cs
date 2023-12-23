@@ -51,8 +51,8 @@ public class MappingProfile : Profile
 		CreateMap<ContentAudioCreationDto, ContentCategory>().ReverseMap(); ;
 
 
-		//User
-		CreateMap<User, UserResultDto>().ReverseMap();
+        //User
+        CreateMap<User, DTOs.Users.QuizResultDto>().ReverseMap();
 		CreateMap<UserCreationDto, User>().ReverseMap();
 		CreateMap<UserUpdateDto, User>().ReverseMap();
 		CreateMap<UserResponseDto, User>().ReverseMap();
@@ -83,8 +83,8 @@ public class MappingProfile : Profile
 		//Certificate
 		CreateMap<Certificate, CertificateResultDto>();
 
-		//Quiz
-		CreateMap<Quiz, QuizResultDto>().ReverseMap();
+        //Quiz
+        CreateMap<Quiz, DTOs.Quizzes.QuizResultDto>().ReverseMap();
 		CreateMap<QuizCreationDto, Quiz>().ReverseMap();
 		CreateMap<QuizUpdateDto, Quiz>().ReverseMap();
 

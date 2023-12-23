@@ -559,6 +559,20 @@ namespace Nabeey.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTime(2023, 12, 23, 12, 47, 44, 319, DateTimeKind.Utc).AddTicks(5871),
+                            Email = "admin@mail.com",
+                            FirstName = "Admin",
+                            IsDeleted = false,
+                            LastName = "Admin",
+                            PasswordHash = "admin",
+                            Phone = "+998979565060",
+                            UserRole = 2
+                        });
                 });
 
             modelBuilder.Entity("Nabeey.Domain.Entities.Answers.Answer", b =>

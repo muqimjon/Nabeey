@@ -10,6 +10,6 @@ public class QuestionAnswerResultDto
     public bool IsTrue { get; set; }
     public AnswerResultDto Answer { get; set; }
 	public QuestionResultDto Question { get; set; }
-	public QuizResultDto Quiz { get; set; }
-	public UserResultDto User { get; set; }
+	public Quizzes.QuizResultDto Quiz { get; set; }
+	public Users.QuizResultDto User { get; set; }
 }

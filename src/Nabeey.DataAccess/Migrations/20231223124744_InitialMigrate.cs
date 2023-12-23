@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Nabeey.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -296,6 +296,42 @@ namespace Nabeey.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Certificates",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    FileId = table.Column<long>(type: "bigint", nullable: false),
+                    QuizId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Certificates_Assets_FileId",
+                        column: x => x.FileId,
+                        principalTable: "Assets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Certificates_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Certificates_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "QuestionAnswers",
                 columns: table => new
                 {
@@ -368,6 +404,43 @@ namespace Nabeey.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "QuizResults",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    QuizId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    Ball = table.Column<double>(type: "double precision", nullable: false),
+                    CorrectAnswerCount = table.Column<int>(type: "integer", nullable: false),
+                    IncorrectAnswerCount = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuizResults", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuizResults_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuizResults_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "AssetId", "CreatedAt", "Email", "FirstName", "IsDeleted", "LastName", "PasswordHash", "Phone", "UpdatedAt", "UserRole" },
+                values: new object[] { 1L, null, new DateTime(2023, 12, 23, 12, 47, 44, 319, DateTimeKind.Utc).AddTicks(5871), "admin@mail.com", "Admin", false, "Admin", "admin", "+998979565060", null, 2 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_AssetId",
                 table: "Answers",
@@ -408,6 +481,21 @@ namespace Nabeey.DataAccess.Migrations
                 name: "IX_Books_ImageId",
                 table: "Books",
                 column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Certificates_FileId",
+                table: "Certificates",
+                column: "FileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Certificates_QuizId",
+                table: "Certificates",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Certificates_UserId",
+                table: "Certificates",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContentAudios_AudioId",
@@ -466,6 +554,16 @@ namespace Nabeey.DataAccess.Migrations
                 column: "QuizId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuizResults_QuizId",
+                table: "QuizResults",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizResults_UserId",
+                table: "QuizResults",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_ContentCategoryId",
                 table: "Quizzes",
                 column: "ContentCategoryId");
@@ -491,6 +589,9 @@ namespace Nabeey.DataAccess.Migrations
                 name: "Books");
 
             migrationBuilder.DropTable(
+                name: "Certificates");
+
+            migrationBuilder.DropTable(
                 name: "ContentAudios");
 
             migrationBuilder.DropTable(
@@ -501,6 +602,9 @@ namespace Nabeey.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuizQuestions");
+
+            migrationBuilder.DropTable(
+                name: "QuizResults");
 
             migrationBuilder.DropTable(
                 name: "Answers");

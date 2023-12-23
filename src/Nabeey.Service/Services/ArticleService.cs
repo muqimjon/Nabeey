@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Nabeey.DataAccess.IRepositories;
 using Nabeey.Domain.Configurations;
@@ -12,7 +11,6 @@ using Nabeey.Service.DTOs.Articles;
 using Nabeey.Service.DTOs.Assets;
 using Nabeey.Service.Exceptions;
 using Nabeey.Service.Extensions;
-using Nabeey.Service.Helpers;
 using Nabeey.Service.Interfaces;
 
 namespace Nabeey.Service.Services;
@@ -123,7 +121,6 @@ public class ArticleService : IArticleService
 		return this.mapper.Map<ArticleResultDto>(existArticle);
 	}
 
-
 	public async ValueTask<ArticleResultDto> RetrieveAsync(long id)
 	{
 		var existArticle = await this.articleRepository.SelectAsync(expression: u => u.Id == id, includes: new[] { "User", "Category", "Image" })
@@ -145,7 +142,7 @@ public class ArticleService : IArticleService
 	public async ValueTask<IEnumerable<ArticleResultDto>> RetrieveAllByCategoryIdAsync(long categoryId)
 	{
 		var existCategory = await this.categoryRepository.SelectAsync(expression: u => u.Id == categoryId, includes: new[] { "Image" })
-			?? throw new NotFoundException("This user is not found");
+			?? throw new NotFoundException("This category is not found");
 
 		var contentArticles = await this.articleRepository.SelectAll(a => a.CategoryId == categoryId ,includes: new[] { "User.Asset", "Category", "Image" }).ToListAsync();
 
