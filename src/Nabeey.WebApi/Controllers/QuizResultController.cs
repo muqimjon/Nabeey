@@ -1,6 +1,7 @@
 using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Nabeey.Service.Interfaces;
+using Nabeey.Service.Exceptions;
 using Nabeey.Domain.Entities.Quizzes;
 using Nabeey.Service.DTOs.Certificates;
 using Microsoft.AspNetCore.Authorization;
@@ -18,7 +19,7 @@ public class QuizResultController : BaseController
     }
 
     [ProducesResponseType(typeof(ResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
     [HttpGet("get-by-quizId-userId/{quizId:long}/{userId:long}")]
     public async ValueTask<IActionResult> GetAsync(long userId, long quizId)
@@ -31,7 +32,7 @@ public class QuizResultController : BaseController
 
 
     [ProducesResponseType(typeof(IEnumerable<ResultDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get-by-quizId/{quizId:long}")]
 	public async ValueTask<IActionResult> GetByQuizIdAsync(long quizId)
@@ -43,7 +44,7 @@ public class QuizResultController : BaseController
 		});
 
     [ProducesResponseType(typeof(IEnumerable<CertificateResultDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
     [HttpGet("get-certificate/{quizId:long}")]
     public async ValueTask<IActionResult> GetCertificateAsync(long userId, long quizId)

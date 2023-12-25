@@ -6,6 +6,7 @@ using Nabeey.Service.Interfaces;
 using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.Certificates;
 using Microsoft.AspNetCore.Authorization;
+using Nabeey.Service.Exceptions;
 
 namespace Nabeey.Web.Controllers;
 
@@ -20,7 +21,7 @@ public class UserController : BaseController
     }
 
     [ProducesResponseType(typeof(QuizResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(AlreadyExistException), StatusCodes.Status403Forbidden)]
     [AllowAnonymous]
 	[HttpPost("create")]
 	public async ValueTask<IActionResult> PostAsync([FromForm] UserCreationDto dto)
@@ -32,7 +33,7 @@ public class UserController : BaseController
 		});
 
     [ProducesResponseType(typeof(QuizResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpPut("update")]
 	public async ValueTask<IActionResult> PutAsync([FromForm] UserUpdateDto dto)
 		=> Ok(new Response
@@ -43,7 +44,7 @@ public class UserController : BaseController
 		});
 
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpDelete("delete/{id:long}")]
 	public async ValueTask<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
@@ -54,7 +55,7 @@ public class UserController : BaseController
 		});
 
     [ProducesResponseType(typeof(QuizResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async ValueTask<IActionResult> GetByIdAsync(long id)
@@ -79,7 +80,7 @@ public class UserController : BaseController
 		});
 
     [ProducesResponseType(typeof(QuizResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpPatch("upgrade-role")]
 	public async ValueTask<IActionResult> UpgradeRoleAsync(long id, Role role)
 		=> Ok(new Response
@@ -91,7 +92,7 @@ public class UserController : BaseController
 
 
     [ProducesResponseType(typeof(IEnumerable<CertificateResultDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpGet("get-certificate")]
 	public async ValueTask<IActionResult> GetCertificate(long userId)
      => Ok(new Response

@@ -4,6 +4,7 @@ using Nabeey.Service.Interfaces;
 using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.Questions;
 using Microsoft.AspNetCore.Authorization;
+using Nabeey.Service.Exceptions;
 
 namespace Nabeey.Web.Controllers;
 
@@ -16,7 +17,7 @@ public class QuestionsController : BaseController
 	}
 
     [ProducesResponseType(typeof(QuestionResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(AlreadyExistException), StatusCodes.Status403Forbidden)]
     [HttpPost("create")]
 	public async ValueTask<IActionResult> PostAsync([FromForm] QuestionCreationDto dto)
 		=> Ok(new Response
@@ -27,7 +28,7 @@ public class QuestionsController : BaseController
 		});
 
     [ProducesResponseType(typeof(QuestionResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpPut("update")]
 	public async ValueTask<IActionResult> UpdateAsync([FromForm] QuestionUpdateDto dto)
 		=> Ok(new Response
@@ -38,7 +39,7 @@ public class QuestionsController : BaseController
 		});
 
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpDelete("delete/{id:long}")]
 	public async ValueTask<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
@@ -49,7 +50,7 @@ public class QuestionsController : BaseController
 		});
 
     [ProducesResponseType(typeof(QuestionResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async ValueTask<IActionResult> GetAsync(long id)
