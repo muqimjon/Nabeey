@@ -1,6 +1,7 @@
 ﻿using Nabeey.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Nabeey.Service.Interfaces;
+using Nabeey.Service.Exceptions;
 using Nabeey.Service.DTOs.QuestionAnswers;
 
 namespace Nabeey.Web.Controllers;
@@ -14,7 +15,7 @@ public class QuestionAnswerController : BaseController
 	}
 
     [ProducesResponseType(typeof(QuestionAnswerResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(AlreadyExistException), StatusCodes.Status403Forbidden)]
     [HttpPost("create")]
 	public async ValueTask<IActionResult> PostAsync(QuestionAnswerCreationDto dto)
 		=> Ok(new Response
@@ -25,7 +26,7 @@ public class QuestionAnswerController : BaseController
 		});
 
     [ProducesResponseType(typeof(QuestionAnswerResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpPut("update")]
 	public async ValueTask<IActionResult> UpdateAsync(QuestionAnswerUpdateDto dto)
 		=> Ok(new Response

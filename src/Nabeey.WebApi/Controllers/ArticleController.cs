@@ -4,6 +4,7 @@ using Nabeey.Service.Interfaces;
 using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.Articles;
 using Microsoft.AspNetCore.Authorization;
+using Nabeey.Service.Exceptions;
 
 namespace Nabeey.Web.Controllers;
 
@@ -16,7 +17,7 @@ public class ArticleController : BaseController
 	}
 
     [ProducesResponseType(typeof(ArticleResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(AlreadyExistException), StatusCodes.Status403Forbidden)]
     [HttpPost("create")]
 	public async Task<IActionResult> PostAsync([FromForm] ArticleCreationDto dto)
 		=> Ok(new Response
@@ -27,7 +28,7 @@ public class ArticleController : BaseController
 		});
 
     [ProducesResponseType(typeof(ArticleResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpPut("update")]
 	public async Task<IActionResult> UpdateAsync([FromForm] ArticleUpdateDto dto)
 		=> Ok(new Response
@@ -38,7 +39,7 @@ public class ArticleController : BaseController
 		});
 
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpDelete("delete/{id:long}")]
 	public async Task<IActionResult> DeleteAsync(long id)
 		=> Ok(new Response
@@ -49,7 +50,7 @@ public class ArticleController : BaseController
 		});
 
     [ProducesResponseType(typeof(ArticleResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async Task<IActionResult> GetAsync(long id)
@@ -74,7 +75,7 @@ public class ArticleController : BaseController
 		});
 
     [ProducesResponseType(typeof(IEnumerable<ArticleResultDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get-by-user/{userId:long}")]
 	public async Task<IActionResult> GetAllByUserIdAsync(long userId)
@@ -86,7 +87,7 @@ public class ArticleController : BaseController
 		});
 
     [ProducesResponseType(typeof(IEnumerable<ArticleResultDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get-by-category/{categoryId:long}")]
 	public async Task<IActionResult> GetAllByCategoryIdAsync(long categoryId)

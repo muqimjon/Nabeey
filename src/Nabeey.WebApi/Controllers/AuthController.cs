@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Nabeey.Service.Exceptions;
 using Nabeey.Service.Interfaces;
 using Nabeey.Web.Models;
 
@@ -14,7 +15,7 @@ public class AuthController : BaseController
 	}
 
     [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpPost("login")]
 	public async Task<IActionResult> GenerateTokenAsync(string phone, string password)

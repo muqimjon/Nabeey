@@ -4,6 +4,7 @@ using Nabeey.Service.Interfaces;
 using Nabeey.Domain.Configurations;
 using Nabeey.Service.DTOs.ContentVideos;
 using Microsoft.AspNetCore.Authorization;
+using Nabeey.Service.Exceptions;
 
 namespace Nabeey.Web.Controllers;
 
@@ -16,7 +17,7 @@ public class ContentVideosController : BaseController
 	}
 
     [ProducesResponseType(typeof(ContentVideoResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(AlreadyExistException), StatusCodes.Status403Forbidden)]
     [HttpPost("create")]
 	public async Task<IActionResult> PostAsync(ContentVideoCreationDto dto)
 		   => Ok(new Response
@@ -27,7 +28,7 @@ public class ContentVideosController : BaseController
 		   });
 
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [HttpDelete("delete/{id:long}")]
 	public async Task<IActionResult> DeleteAsync(long id)
 	   => Ok(new Response
@@ -38,7 +39,7 @@ public class ContentVideosController : BaseController
 	   });
 
     [ProducesResponseType(typeof(ContentVideoResultDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get/{id:long}")]
 	public async Task<IActionResult> GetAsync(long id)
@@ -50,7 +51,7 @@ public class ContentVideosController : BaseController
 	  });
 
     [ProducesResponseType(typeof(IEnumerable<ContentVideoResultDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
     [AllowAnonymous]
 	[HttpGet("get-by-categoryId/{categorytId:long}")]
 	public async Task<IActionResult> GetByCategoryIdAsync(long categorytId)

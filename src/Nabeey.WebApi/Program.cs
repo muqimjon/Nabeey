@@ -6,9 +6,6 @@ using InfoZest.WebApi.Extensions;
 using Nabeey.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Nabeey.Service.Interfaces;
-using Nabeey.Domain.Entities.Users;
-using Nabeey.Service.DTOs.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +18,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.CustomSchemaIds(type => type.FullName); // Avtomatik skhemaID generatsiya qilish
 });
+builder.Services.AddSwaggerGenNewtonsoftSupport();
 
 // Add Authorization
 builder.Services.ConfigureSwagger();
@@ -47,16 +45,16 @@ builder.Services.AddJwt(builder.Configuration);
 
 var app = builder.Build();
 
+#region Custom services
+// Migrate Database
 app.MigrateDatabase();
 
-// Get Accessor
+// Initialize Accessor
 HttpContextExtensions.InitAccessor(app);
 
+// Path for Static Files
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
-
-//var userService = app.Services.GetRequiredService<IUserService>();
-//var adminInfo = app.Configuration.GetSection("AdminInfo").Get<UserCreationDto>();
-//await userService.AddAsync(adminInfo);
+#endregion	
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
