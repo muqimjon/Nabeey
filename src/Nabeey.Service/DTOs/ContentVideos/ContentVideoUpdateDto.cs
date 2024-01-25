@@ -6,5 +6,6 @@ public class ContentVideoUpdateDto
 	public string Title { get; set; }
 	public string Discription { get; set; }
 	public string VideoLink { get; set; }
+    public string Author { get; set; }
 	public long CategoryId { get; set; }
 }
