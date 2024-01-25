@@ -9,8 +9,10 @@ public class Certificate : Auditable
 {
     public long UserId { get; set; }
     public User User { get; set; }
+
     public long FileId { get; set; }
     public Asset File { get; set; }
+
     public long QuizId { get; set; }
     public Quiz Quiz { get; set; }
 }

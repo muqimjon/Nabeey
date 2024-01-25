@@ -5,5 +5,6 @@ public class ContentVideoCreationDto
 	public string Title { get; set; }
 	public string Description { get; set; }
 	public string VideoLink { get; set; }
-	public long CategoryId { get; set; }
+    public string Author { get; set; }
+    public long CategoryId { get; set; }
 }
